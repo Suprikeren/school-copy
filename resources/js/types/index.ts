@@ -1,0 +1,33 @@
+export type * from './auth';
+export type * from './navigation';
+export type * from './ui';
+import { Config } from 'ziggy-js';
+import { Role } from './role';
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    referral_code: string | null;
+    email_verified_at?: string;
+    avatar?: string;
+    roles: Role[];
+}
+
+export interface UserLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+export type PageProps<
+    T extends Record<string, unknown> = Record<string, unknown>,
+> = T & {
+    auth: {
+        user: User;
+        permissions: Record<string, boolean>;
+        super: boolean;
+    };
+    ziggy: Config & { location: string };
+};
